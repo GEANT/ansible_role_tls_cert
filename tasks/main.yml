@@ -6,8 +6,12 @@
     - "{{ ansible_os_family }}.yml"
   tags: always
 
-- import_tasks: packages.yml
+- name: Ensure necessary packages are available
+  apt:
+    name: "{{ tls_cert_packages }}"
+    state: present
   tags: crt
+
 
 - import_tasks: openssl.yml
   tags: crt,openssl
