@@ -1,0 +1,21 @@
+---
+# defaults file for tls_cert
+#
+# Key vars
+tls_cert_key_dest_dir: "/etc/ssl/private"
+tls_cert_key_dest_name: "server.key"
+tls_cert_pem_dest_name: "server.pem"
+tls_cert_key_owner: "root"
+tls_cert_key_group: "ssl-cert"
+tls_cert_key_mode: "0640"
+
+# Cert vars
+tls_cert_crt_dest_dir: "/etc/ssl/certs"
+tls_cert_crt_dest_name: "server.crt"
+tls_cert_full_dest_name: "server_full.crt"
+tls_cert_crt_owner: "root"
+tls_cert_crt_group: "root"
+tls_cert_crt_mode: "0644"
+
+# CA vars
+tls_cert_ca_alias: "chain.crt"

@@ -1,0 +1,7 @@
+---
+# Specific for the RedHat family
+
+tls_cert_services:
+  - httpd
+  - postfix
+  - postgresql

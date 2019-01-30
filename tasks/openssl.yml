@@ -1,0 +1,19 @@
+---
+# Needed because OpenSSL versions > 1.0.0 use a different hashing algo for subject and issuer.
+# If you have two versions hanging around you need to stick with the old one..
+# See http://serverfault.com/questions/401117
+- name: Establish OpenSSL version
+  become: false
+  command: openssl version
+  register: ov
+  changed_when: false
+  check_mode: false
+
+# If openssl >= 1.0.0, use '_old' as extra string for use with issuer_hash and subject_hash
+- name: Establish hash extension
+  set_fact:
+    openssl_hash_append: "{{
+      ov.stdout |
+      regex_replace('^\\S+\\s+(\\S+).*', '\\1') is version_compare('1.0.0' , '>=') |
+      ternary('_old', '')
+      }}"

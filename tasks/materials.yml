@@ -1,0 +1,71 @@
+---
+# Find CA certificate, based on certificate issuer key ID.
+# The key IDs are mapped to file names in a vars file.
+# TODO: store these as vars in this module, in not in files/
+- name: Establish certificate issuer and issuer_hash
+  become: false
+  shell: echo "{{ tls_cert_crt }}" | openssl x509 -noout -issuer_hash{{ openssl_hash_append }} -issuer
+  register: issuer
+  changed_when: false
+  check_mode: no
+
+- set_fact:
+    tls_cert_ca_name:
+      "{{ issuer.stdout_lines[1] | regex_replace('.*\\/?CN ?= ?(.*)$', '\\1') | regex_replace(' ', '_') }}"
+    tls_cert_ca:
+      "{{ ca[issuer.stdout_lines[0]] }}"
+
+- name: Ensure CA chain is available
+  copy:
+    content: "{{ tls_cert_ca }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_ca_name }}.crt"
+
+- name: Ensure CA chain file is symlinked to {{ tls_cert_crt_dest_dir }}/{{ tls_cert_ca_alias }}
+  file:
+    src: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_ca_name }}.crt"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_ca_alias }}"
+    state: link
+  notify: restart_services
+
+
+# Private key
+
+- name: Ensure PEM encoded private key is available
+  copy:
+    content: "{{ tls_cert_key }}"
+    dest: "{{ tls_cert_key_dest_dir }}/{{ tls_cert_key_dest_name }}"
+    owner: "{{ tls_cert_key_owner }}"
+    group: "{{ tls_cert_key_group }}"
+    mode: "{{ tls_cert_key_mode }}"
+  notify: restart_services
+
+# See https://www.digicert.com/ssl-support/pem-ssl-creation.htm#4in1
+# TODO: add the root the bottom
+- name: Ensure PEM encoded all-in-one (key/crt/ca) is available
+  copy:
+    content: "{{ tls_cert_key }}{{ tls_cert_crt }}{{ tls_cert_ca }}"
+    dest: "{{ tls_cert_key_dest_dir }}/{{ tls_cert_pem_dest_name }}"
+    owner: "{{ tls_cert_key_owner }}"
+    group: "{{ tls_cert_key_group }}"
+    mode: "{{ tls_cert_key_mode }}"
+  notify: restart_services
+
+# Cert
+
+- name: Ensure PEM encoded certificate is available
+  copy:
+    content: "{{ tls_cert_crt }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_crt_dest_name }}"
+    owner: "{{ tls_cert_crt_owner }}"
+    group: "{{ tls_cert_crt_group }}"
+    mode: "{{ tls_cert_crt_mode }}"
+  notify: restart_services
+
+- name: Ensure PEM encoded certficate + CA is available
+  copy:
+    content: "{{ tls_cert_crt }}\n{{ tls_cert_ca }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_full_dest_name }}"
+    owner: "{{ tls_cert_crt_owner }}"
+    group: "{{ tls_cert_crt_group }}"
+    mode: "{{ tls_cert_crt_mode }}"
+  notify: restart_services
