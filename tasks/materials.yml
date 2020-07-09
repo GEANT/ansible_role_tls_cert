@@ -42,17 +42,17 @@
 - name: Ensure PEM encoded all-in-one (key/crt/ca) is available
   copy:
     content: "{{ tls_cert_key }}{{ tls_cert_crt }}{{ tls_cert_ca }}"
-    dest: "{{ tls_cert_key_dest_dir }}/{{tls_cert_pem_dest_name }}"
+    dest: "{{ tls_cert_key_dest_dir }}/{{ tls_cert_pem_dest_name }}"
     owner: "{{ tls_cert_key_owner }}"
     group: "{{ tls_cert_key_group }}"
     mode: "{{ tls_cert_key_mode }}"
   notify: restart_services
-  
+
 # Cert
 - name: Ensure PEM encoded certificate is available
   copy:
     content: "{{ tls_cert_crt }}"
-    dest: "{{ tls_cert_crt_dest_dir }}/{{tls_cert_crt_dest_name }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_crt_dest_name }}"
     owner: "{{ tls_cert_crt_owner }}"
     group: "{{ tls_cert_crt_group }}"
     mode: "{{ tls_cert_crt_mode }}"
@@ -61,7 +61,7 @@
 - name: Ensure PEM encoded certficate + CA is available
   copy:
     content: "{{ tls_cert_crt }}\n{{ tls_cert_ca }}"
-    dest: "{{ tls_cert_crt_dest_dir }}/{{tls_cert_full_dest_name }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_full_dest_name }}"
     owner: "{{ tls_cert_crt_owner }}"
     group: "{{ tls_cert_crt_group }}"
     mode: "{{ tls_cert_crt_mode }}"

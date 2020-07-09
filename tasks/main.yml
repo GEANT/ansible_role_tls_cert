@@ -8,7 +8,7 @@
 
 - import_tasks: packages.yml
   tags: [crt]
-  
+
 - import_tasks: verify_pair.yml
   tags: [crt,verify]
 
