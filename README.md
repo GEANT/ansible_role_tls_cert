@@ -7,8 +7,8 @@ Certificates from the TCS service are either regular (i.e. Domain Validated) cer
 This role deploys:
 
 * the key pair
-* the CA that belongs to it
-* a single file containing private key, cert, and CA
+* the chain that belongs to it
+* a single file containing private key, cert, and chain
 
 TODO: generate pkcs12/jks key stores based on defined keystore password.
 
@@ -21,26 +21,27 @@ OpenSSL
 Role Variables
 --------------
 
-At a minimum these two variables are needed:
+A hosts' host_vars should contain these two vars contain the certificate and the private key:
 
-    tls_cert_crt: |
-     -----BEGIN CERTIFICATE-----
-      MIIEYzCCA0ugAwIBAgIQBp43Tw4JNie9o9zO/cKbCzANBgkqhkiG9w0BAQ0FADBk
-      MQswCQYDVQQGEwJOTDEWMBQGA1UECBMNTm9vcmQtSG9sbGFuZDESMBAGA1UEBxMJ
-      QW1zdGVyZGFtMQ8wDQYDVQQKEwZURVJFTkExGDAWBgNVBAMTD1RFUkVOQSBTU0wg
-      Q0EgMzAeFw0xNjExMjgwMDAwMDBaFw0xOTEyMDMxMjAwMDBaMHMxCzAJBgNVBAYT
-      Ak5MMRYwFAYDVQQIEw1Ob29yZC1Ib2xsYW5kMRIwEAYDVQQHEwlBbXN0ZXJkYW0x
-      GzAZBgNVBAoMEkfDiUFOVCBBc3NvY2lhdGlvbjEbMBkGA1UEAxMSd2lraS11YXQu
-      Z2VhbnQub3JnMFkwEwYHKoZIzj0CAQYI..... etc
-      -----END CERTIFICATE-----
+```
+tls_cert_crt: |
+ -----BEGIN CERTIFICATE-----
+  MIIEYzCCA0ugAwIBAgIQBp43Tw4JNie9o9zO/cKbCzANBgkqhkiG9w0BAQ0FADBk
+  MQswCQYDVQQGEwJOTDEWMBQGA1UECBMNTm9vcmQtSG9sbGFuZDESMBAGA1UEBxMJ
+  QW1zdGVyZGFtMQ8wDQYDVQQKEwZURVJFTkExGDAWBgNVBAMTD1RFUkVOQSBTU0wg
+  Q0EgMzAeFw0xNjExMjgwMDAwMDBaFw0xOTEyMDMxMjAwMDBaMHMxCzAJBgNVBAYT
+  Ak5MMRYwFAYDVQQIEw1Ob29yZC1Ib2xsYW5kMRIwEAYDVQQHEwlBbXN0ZXJkYW0x
+  GzAZBgNVBAoMEkfDiUFOVCBBc3NvY2lhdGlvbjEbMBkGA1UEAxMSd2lraS11YXQu
+  Z2VhbnQub3JnMFkwEwYHKoZIzj0CAQYI..... etc
+  -----END CERTIFICATE-----
 
-    tls_cert_key: |
-      -----BEGIN PRIVATE KEY-----
-      MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgQn3F4SqdSOARpOd2
-      5YcHDPZh6bIpb79BRdHONCAASx1IjoG......etc
-      -----END PRIVATE KEY-----
+tls_cert_key: |
+  -----BEGIN PRIVATE KEY-----
+  MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgQn3F4SqdSOARpOd2
+  5YcHDPZh6bIpb79BRdHONCAASx1IjoG......etc
+  -----END PRIVATE KEY-----
 
-It is recommended to use `ansible-vault` or similar to encrypt the private key.
+It is advisable to use `ansible-vault` or similar to encrypt your private key.
 
 Dependencies
 ------------
@@ -60,7 +61,7 @@ Example Playbook
 License
 -------
 
-GNU GENERAL PUBLIC LICENSE Version 3
+BSD
 
 Author Information
 ------------------

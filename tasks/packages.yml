@@ -1,8 +1,5 @@
 ---
-#
 - name: Ensure neccessary packages are available
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - ssl-cert
+  apt:
+    name:
+      - ssl-cert
