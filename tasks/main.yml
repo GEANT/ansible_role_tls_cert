@@ -4,23 +4,16 @@
   with_first_found:
     - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
     - "{{ ansible_os_family }}.yml"
-  tags: always
+  tags: [always]
 
-- name: Ensure necessary packages are available
-  apt:
-    name: "{{ tls_cert_packages }}"
-    state: present
-  tags: crt
-
-
-- import_tasks: openssl.yml
-  tags: crt,openssl
-
+- import_tasks: packages.yml
+  tags: [crt]
+  
 - import_tasks: verify_pair.yml
-  tags: crt,verify
+  tags: [crt,verify]
 
 
 - import_tasks: materials.yml
   # Only when key matches cert
   when: pubkey_crt.stdout == pubkey_key.stdout
-  tags: crt,ca,chain,key,cert
+  tags: [crt,ca,chain,key,cert]

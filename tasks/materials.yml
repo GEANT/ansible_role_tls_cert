@@ -1,10 +1,9 @@
 ---
-# Find CA certificate, based on certificate issuer key ID.
-# The key IDs are mapped to file names in a vars file.
-# TODO: store these as vars in this module, in not in files/
+# Find CA certificate, based on certificate issuer subject hash.
+# The hashes are mapped to block of PEM data in vars/main.yml.
 - name: Establish certificate issuer and issuer_hash
   become: false
-  shell: echo "{{ tls_cert_crt }}" | openssl x509 -noout -issuer_hash{{ openssl_hash_append }} -issuer
+  shell: echo "{{ tls_cert_crt }}" | openssl x509 -noout -issuer_hash -issuer
   register: issuer
   changed_when: false
   check_mode: no
@@ -29,7 +28,6 @@
 
 
 # Private key
-
 - name: Ensure PEM encoded private key is available
   copy:
     content: "{{ tls_cert_key }}"
@@ -44,18 +42,17 @@
 - name: Ensure PEM encoded all-in-one (key/crt/ca) is available
   copy:
     content: "{{ tls_cert_key }}{{ tls_cert_crt }}{{ tls_cert_ca }}"
-    dest: "{{ tls_cert_key_dest_dir }}/{{ tls_cert_pem_dest_name }}"
+    dest: "{{ tls_cert_key_dest_dir }}/{{tls_cert_pem_dest_name }}"
     owner: "{{ tls_cert_key_owner }}"
     group: "{{ tls_cert_key_group }}"
     mode: "{{ tls_cert_key_mode }}"
   notify: restart_services
-
+  
 # Cert
-
 - name: Ensure PEM encoded certificate is available
   copy:
     content: "{{ tls_cert_crt }}"
-    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_crt_dest_name }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{tls_cert_crt_dest_name }}"
     owner: "{{ tls_cert_crt_owner }}"
     group: "{{ tls_cert_crt_group }}"
     mode: "{{ tls_cert_crt_mode }}"
@@ -64,7 +61,7 @@
 - name: Ensure PEM encoded certficate + CA is available
   copy:
     content: "{{ tls_cert_crt }}\n{{ tls_cert_ca }}"
-    dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_full_dest_name }}"
+    dest: "{{ tls_cert_crt_dest_dir }}/{{tls_cert_full_dest_name }}"
     owner: "{{ tls_cert_crt_owner }}"
     group: "{{ tls_cert_crt_group }}"
     mode: "{{ tls_cert_crt_mode }}"

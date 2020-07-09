@@ -1,7 +1,4 @@
 ---
-# Needed because OpenSSL versions > 1.0.0 use a different hashing algo for subject and issuer.
-# If you have two versions hanging around you need to stick with the old one..
-# See http://serverfault.com/questions/401117
 - name: Establish public key from certificate
   become: false
   shell: echo "{{ tls_cert_crt }}" | openssl x509 -pubkey -noout
@@ -9,22 +6,15 @@
   changed_when: false
   check_mode: false
 
-
-  # Old OpenSSL does not have the 'pkey' sub command so we have to use 'rsa' instead.
-  # This is not an issue as there was no ECC support back then.
 - name: Establish public key from private key
   become: false
-  shell: echo "{{ tls_cert_key }}" | openssl {{ (openssl_hash_append == '_old') |
-    ternary('pkey' ,'rsa') }} -pubout -outform PEM
-
+  shell: echo "{{ tls_cert_key }}" | openssl pkey -pubout -outform PEM
   register: pubkey_key
   changed_when: false
   check_mode: false
   no_log: true
 
 - debug:
-    msg: |
-      Private key and certificate do NOT belong together. There is no
-      use in continuing as it will break your applications.
+    msg: "Private key and certificate do NOT belong together, there is no use in continuing as it will break your applications"
   failed_when: pubkey_crt.stdout != pubkey_key.stdout
   when: pubkey_crt.stdout != pubkey_key.stdout
