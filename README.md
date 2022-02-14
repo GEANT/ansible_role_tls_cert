@@ -23,7 +23,7 @@ Role Variables
 --------------
 
 
-```
+```yaml
 tls_cert_crt: |
  -----BEGIN CERTIFICATE-----
   MIIEYzCCA0ugAwIBAgIQBp43Tw4JNie9o9zO/cKbCzANBgkqhkiG9w0BAQ0FADBk
@@ -40,6 +40,7 @@ tls_cert_key: |
   MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgQn3F4SqdSOARpOd2
   5YcHDPZh6bIpb79BRdHONCAASx1IjoG......etc
   -----END PRIVATE KEY-----
+```
 
 It is advisable to use `ansible-vault` or similar to encrypt your private key.
 
@@ -47,11 +48,18 @@ It is advisable to use `ansible-vault` or similar to encrypt your private key.
 Example Playbook
 ----------------
 
+```yaml
+- hosts: servers
+  become: true
+  roles:
+    - role: ansible_role_tls_cert
+      vars:
+        tls_cert_restart_services:
+          - apache2
+          - postgresql
+          - postfix
+```
 
-    - hosts: servers
-      become: true
-      roles:
-        - tls_cert
 
 License
 -------
