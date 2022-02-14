@@ -1,19 +1,7 @@
 ---
-- name: Check status of services that can use certificates
-  command: service "{{ item }}" status
-  with_items: "{{ tls_cert_services }}"
-  failed_when: false
-  changed_when: false
-  register: svcs
-  check_mode: no
-  listen: restart_services
-
-- name: Reload any running services
+- name: Reload services
   service:
-    name: "{{ item.item }}"
+    name: "{{ item }}"
     state: reloaded
-  with_items: "{{ svcs.results }}"
-  when: item.rc == 0
-  ignore_errors: "{{ ansible_check_mode }}"
-  listen: restart_services
-
+  loop: "{{ tls_cert_reload_services }}"
+  listen: reload_services

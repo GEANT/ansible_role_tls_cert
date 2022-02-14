@@ -1,5 +1,0 @@
----
-- name: Ensure neccessary packages are available
-  apt:
-    name:
-      - ssl-cert

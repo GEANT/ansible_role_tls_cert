@@ -1,8 +1,0 @@
----
-# Debian family
-
-tls_cert_services:
-  - apache2
-  - postfix
-  - postgresql
-  - nginx
