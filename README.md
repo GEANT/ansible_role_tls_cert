@@ -75,20 +75,14 @@ Example Playbook
         tls_cert_crt: |
           -----BEGIN CERTIFICATE-----
           MIIBkTCCATegAwIBAgIUc9C1CPsz7HvWYeeeCZKPjtB/RSkwCgYIKoZIzj0EAwIw
-          HjEcMBoGA1UEAwwTZ2l0aHViLWRlbW8ta2V5cGFpcjAeFw0yMjAyMTQxMjI2MzJa
-          Fw0zODAxMTcxMjI2MzJaMB4xHDAaBgNVBAMME2dpdGh1Yi1kZW1vLWtleXBhaXIw
-          WTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATivAvRWOtdjXxCB8DAEs65jArkLdti
-          q5goH9bmZ/p/+KLWAHaXAYBhrZv7+SSrwD3tvCqpY9iFh9ZliifOBA4qo1MwUTAd
-          BgNVHQ4EFgQUOhDZkevX/EQQGoLQ3NNaEe3RPfswHwYDVR0jBBgwFoAUOhDZkevX
-          /EQQGoLQ3NNaEe3RPfswDwYDVR0TAQH/BAUwAwEB/zAKBggqhkjOPQQDAgNIADBF
-          AiAywXHOtuwTDFuuJJAkIkhUNZIsXJeM5ahcTFJreSS/jwIhANsxaApk3ZTDaTTP
-          GtO4FXcc9ErXjjBZcSU8165lHMFG
+          HjEcMBoGA1UEAwwTZ2l0aHViLWRlbW8ta2V5cGF.........................
+          ................................................................
           -----END CERTIFICATE-----
         tls_cert_key: |
           -----BEGIN PRIVATE KEY-----
-          MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgl2A5ivqCUWowxKji
-          ss76xTmPDCWumExO8v9srPEArYWhRANCAATivAvRWOtdjXxCB8DAEs65jArkLdti
-          q5goH9bmZ/p/+KLWAHaXAYBhrZv7+SSrwD3tvCqpY9iFh9ZliifOBA4q
+          MIGHAgEAMBMGByqGSM49AgEGCCqGSM49A..............................
+          ss76xTmPDCWumExO8v9srPEArYWh....................................
+          q5goH9bmZ/......................................................
           -----END PRIVATE KEY-----
         tls_cert_restart_services:
           - apache2
