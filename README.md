@@ -5,11 +5,12 @@ Deploys TLS server certificates and their corresponding CA certificate chain
 onto a host.
 
 Certificates from the [TCS service](https://security.geant.org/trusted-certificate-services/)
-can be OV (Organization Validated) or EV (Extended Validation) certificates. This role deploys:
+can be OV (Organization Validated) or EV (Extended Validation) certificates. This role:
 
-* the key pair
-* the chain that belongs to it
-* a single file containing private key, cert, and chain
+* Check if the supplied key and certificate match
+* Deploys the key pair
+* Deploys the CA chain that corresponds to the certificate
+* Deploys a single file containing private key, cert, and chain
 
 TODO: generate pkcs12/jks key stores based on defined keystore password.
 
