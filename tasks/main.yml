@@ -27,7 +27,7 @@
     src: "{{ tls_cert_ca_file }}"
     dest: "{{ tls_cert_crt_dest_dir }}/{{ tls_cert_ca_alias }}"
     state: link
-  notify: restart_services
+  notify: reload_services
 
 - name: Ensure PEM encoded private key is available
   copy:
@@ -36,18 +36,18 @@
     owner: "{{ tls_cert_key_owner }}"
     group: "{{ tls_cert_key_group }}"
     mode: "{{ tls_cert_key_mode }}"
-  notify: restart_services
+  notify: reload_services
 
 # See https://www.digicert.com/ssl-support/pem-ssl-creation.htm#4in1
 # TODO: add the root the bottom
 - name: Ensure PEM encoded all-in-one file (key/crt/ca) is available
   copy:
     content: "{{ tls_cert_key }}{{ tls_cert_crt }}{{ tls_cert_ca }}"
-    dest: "{{ tls_cert_key_dest_dir }}/{{ tls_cert_allinonem_dest_name }}"
+    dest: "{{ tls_cert_key_dest_dir }}/{{ tls_cert_allinone_dest_name }}"
     owner: "{{ tls_cert_key_owner }}"
     group: "{{ tls_cert_key_group }}"
     mode: "{{ tls_cert_key_mode }}"
-  notify: restart_services
+  notify: reload_services
 
 - name: Ensure PEM encoded certificate is available
   copy:
@@ -56,7 +56,7 @@
     owner: "{{ tls_cert_crt_owner }}"
     group: "{{ tls_cert_crt_group }}"
     mode: "{{ tls_cert_crt_mode }}"
-  notify: restart_services
+  notify: reload_services
 
 - name: Ensure PEM encoded certficate + CA is available
   copy:
@@ -65,6 +65,5 @@
     owner: "{{ tls_cert_crt_owner }}"
     group: "{{ tls_cert_crt_group }}"
     mode: "{{ tls_cert_crt_mode }}"
-  notify: restart_services
+  notify: reload_services
 
-# TODO: java key store formats

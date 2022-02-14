@@ -30,9 +30,9 @@ tls_cert_crt_mode: 0644
 tls_cert_ca_alias: chain.crt
 
 
-# Restart services upon changes
-tls_cert_restart_services: []
-# tls_cert_restart_services:
+# Reload services upon changes
+tls_cert_reload_services: []
+# tls_cert_reload_services:
 #   - apache2
 #   - postfix
 #   - postgresql
