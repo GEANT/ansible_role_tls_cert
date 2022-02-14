@@ -1,20 +1,15 @@
 ---
-- name: Establish public key from certificate
-  become: false
-  shell: echo "{{ tls_cert_crt }}" | openssl x509 -pubkey -noout
-  register: pubkey_crt
-  changed_when: false
-  check_mode: false
+- name: Fetch certificate info
+  community.crypto.x509_certificate_info:
+    content: "{{ tls_cert_crt }}"
+  register: _crt
 
-- name: Establish public key from private key
-  become: false
-  shell: echo "{{ tls_cert_key }}" | openssl pkey -pubout -outform PEM
-  register: pubkey_key
-  changed_when: false
-  check_mode: false
-  no_log: true
+- name: Fetch private key info
+  community.crypto.openssl_privatekey_info:
+    content: "{{ tls_cert_key }}"
+  register: _key
 
-- debug:
-    msg: "Private key and certificate do NOT belong together, there is no use in continuing as it will break your applications"
-  failed_when: pubkey_crt.stdout != pubkey_key.stdout
-  when: pubkey_crt.stdout != pubkey_key.stdout
+- name: Safety check
+  assert:
+    that: _crt.public_key == _key.public_key
+    fail_msg: "Private key and certificate do NOT belong together, there is no use in continuing as it will break your applications"

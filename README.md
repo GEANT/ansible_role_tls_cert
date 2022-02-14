@@ -1,10 +1,11 @@
 tls_cert
 =========
 
-Deploys TLS server certificates and their corresponding CA certificate chain to a host.
+Deploys TLS server certificates and their corresponding CA certificate chain
+onto a host.
 
-Certificates from the TCS service are either regular (i.e. Domain Validated) certificates, or EV (Extended Validation) certificates. 
-This role deploys:
+Certificates from the [TCS service](https://security.geant.org/trusted-certificate-services/)
+can be OV (Organization Validated) or EV (Extended Validation) certificates. This role deploys:
 
 * the key pair
 * the chain that belongs to it
@@ -16,12 +17,11 @@ TODO: generate pkcs12/jks key stores based on defined keystore password.
 Requirements
 ------------
 
-OpenSSL
+Ansible 3.0+
 
 Role Variables
 --------------
 
-A hosts' host_vars should contain these two vars contain the certificate and the private key:
 
 ```
 tls_cert_crt: |
@@ -43,10 +43,6 @@ tls_cert_key: |
 
 It is advisable to use `ansible-vault` or similar to encrypt your private key.
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
 Example Playbook
 ----------------
@@ -56,7 +52,6 @@ Example Playbook
       become: true
       roles:
         - tls_cert
-      
 
 License
 -------

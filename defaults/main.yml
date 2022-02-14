@@ -1,10 +1,19 @@
 ---
-# defaults file for tls_cert
-#
+
+# PEM formatted X.509 certificate
+# tls_cert_crt:
+
+
+# PEM formatted X.509 private key
+# tls_cert_key:
+
+
+
 # Key vars
 tls_cert_key_dest_dir: /etc/ssl/private
 tls_cert_key_dest_name: server.key
-tls_cert_pem_dest_name: server.pem
+# all-in-one file name (key+crt+chain)
+tls_cert_allinone_dest_name: server.pem
 tls_cert_key_owner: root
 tls_cert_key_group: ssl-cert
 tls_cert_key_mode: 0640
@@ -19,3 +28,13 @@ tls_cert_crt_mode: 0644
 
 # CA vars
 tls_cert_ca_alias: chain.crt
+
+
+# Restart services upon changes
+tls_cert_restart_services: []
+# tls_cert_restart_services:
+#   - apache2
+#   - postfix
+#   - postgresql
+#   - nginx
+
