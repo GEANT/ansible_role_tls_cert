@@ -7,8 +7,6 @@
 # PEM formatted X.509 private key
 # tls_cert_key:
 
-
-
 # Key vars
 tls_cert_key_dest_dir: /etc/ssl/private
 tls_cert_key_dest_name: server.key
@@ -29,7 +27,6 @@ tls_cert_crt_mode: 0644
 # CA vars
 tls_cert_ca_alias: chain.crt
 
-
 # Reload services upon changes
 tls_cert_reload_services: []
 # tls_cert_reload_services:
@@ -37,4 +34,3 @@ tls_cert_reload_services: []
 #   - postfix
 #   - postgresql
 #   - nginx
-
