@@ -2,14 +2,14 @@
 - name: Fetch certificate info
   community.crypto.x509_certificate_info:
     content: "{{ tls_cert_crt }}"
-  register: _crt
+  register: _tls_crt
 
 - name: Fetch private key info
   community.crypto.openssl_privatekey_info:
     content: "{{ tls_cert_key }}"
-  register: _key
+  register: _tls_key
 
 - name: Safety check
   assert:
-    that: _crt.public_key == _key.public_key
+    that: _tls_crt.public_key == _tls_key.public_key
     fail_msg: "Private key and certificate do NOT belong together, there is no use in continuing as it will break your applications"
