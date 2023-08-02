@@ -11,8 +11,8 @@
 # Find CA certificate, based on the authority key identifier
 - set_fact:
     # This list of supported CAs is in vars/main.yml.
-    tls_cert_ca: "{{ ca_certs|json_query('[?key_id==`' ~ _crt.authority_key_identifier ~ '`].cert|[0]') }}"
-    tls_cert_ca_file: "{{ tls_cert_crt_dest_dir ~ '/' ~ ( _crt.issuer.commonName | regex_replace(' ', '_')) }}.crt"
+    tls_cert_ca: "{{ ca_certs|json_query('[?key_id==`' ~ _tls_crt.authority_key_identifier ~ '`].cert|[0]') }}"
+    tls_cert_ca_file: "{{ tls_cert_crt_dest_dir ~ '/' ~ ( _tls_crt.issuer.commonName | regex_replace(' ', '_')) }}.crt"
 
 - name: Ensure PEM encoded CA chain is available as {{ tls_cert_ca_name }}
   copy:
