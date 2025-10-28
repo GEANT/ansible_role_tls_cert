@@ -411,7 +411,7 @@ ca_certs:
       89RJdcGZO9JMXv4inBFIEuMAMlGPxzcroEx+ehDXyGR0asw7CooV2DCfiEJlIsKz
       LcPZew==
       -----END CERTIFICATE-----
-  - key_id: c9:1b:53:81:12:fe:04:d5:16:d1:aa:bc:9a:6f:b7:a0:95:19:6e:ca
+  - key_id: e9:99:06:8d:17:1f:ab:fb:96:1a:5a:c8:5b:5e:5d:5e:ec:da:9c:8f
     subject:
       commonName: GEANT TLS ECC 1
       organizationName: Hellenic Academic and Research Institutions CA
